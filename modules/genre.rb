@@ -11,4 +11,12 @@ class Genre
     @items << item unless @items.include?(item)
     item.genre = self
   end
+
+  # Data Serialization
+  def to_json(options = {})
+    {
+       id: @id,
+       name: @name
+    }.to_json(options)
+  end
 end

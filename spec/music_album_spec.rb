@@ -6,7 +6,7 @@ describe MusicAlbum do
       @music_album = MusicAlbum.new('2020-01-01', on_spotify: true)
     end
 
-    it 'should inherit from the Item class' do
+    it 'should inherit behavior from the Item class' do
       expect(described_class.superclass).to be Item
     end
 

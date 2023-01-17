@@ -13,4 +13,12 @@ class MusicAlbum < Item
   end
 
   private :can_be_archived?
+
+  def to_json(options = {})
+    {
+        publish_date: @publish_date,
+        on_spotify: @on_spotify,
+        archived: @archived,
+    }.to_json(options)
+  end
 end
