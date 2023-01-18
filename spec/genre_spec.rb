@@ -21,9 +21,9 @@ describe Genre do
 
     describe '#add_item' do
       it 'should correctly add an item' do
-        item = Item.new('2022/01/01', true)
-        @genre.add_item(item)
-        expect(@genre.items).to eq([item])
+        album = MusicAlbum.new('2023/12/25', on_spotify: true)
+        @genre.add_item(album)
+        expect(@genre.items).to eq([album])
       end
     end
   end
