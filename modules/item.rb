@@ -1,12 +1,13 @@
 require 'date'
 
 class Item
-  attr_accessor :published_date, :archived, :genre
+  attr_accessor :published_date, :archived, :label, :genre
 
   def initialize(published_date, archived)
     @published_date = published_date
     @archived = archived
     @id = Random.rand(1..1000)
+    @label = label
   end
 
   def add_genre=(genre)
@@ -24,5 +25,10 @@ class Item
     return unless can_be_archived?
 
     true
+  end
+
+  def add_label(label)
+    @label = label
+    label.items << self unless label.items.include?(self)
   end
 end
