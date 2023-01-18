@@ -53,7 +53,7 @@ module GameAndAuthor
     game = Game.new(published_date, multiplayer, last_played_at)
     author.add_item(game)
 
-    @games.push(game.to_json)
+    @games.push(game)
     @authors.push(author)
 
     puts 'Game created successfully! ✌🏼'

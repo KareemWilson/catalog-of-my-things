@@ -13,11 +13,11 @@ class Game < Item
     super && Date.parse(@last_played_at).year < Date.today.year - 2
   end
 
-  def to_json(*_args)
+  def to_json(options = {})
     {
       'published_date' => @published_date,
       'multiplayer' => @multiplayer,
       'last_played_at' => @last_played_at
-    }
+    }.to_json(options)
   end
 end
