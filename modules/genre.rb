@@ -15,8 +15,8 @@ class Genre
   # Data Serialization
   def to_json(options = {})
     {
-       id: @id,
-       name: @name
+      id: @id,
+      name: @name
     }.to_json(options)
   end
 end
