@@ -60,8 +60,6 @@ class Main
       else
         puts 'Use numbers only.🚶🏼‍♂️'
       end
-
-
     end
   end
 end
