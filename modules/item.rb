@@ -30,6 +30,8 @@ class Item
     Date.parse(@published_date).year < Date.today.year - 10
   end
 
+  private :can_be_archived?
+
   def move_to_archive?
     return unless can_be_archived?
 
