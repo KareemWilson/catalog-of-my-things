@@ -20,7 +20,7 @@ module AppBookLab
   end
 
   def save_labels
-    return unless @labels.empty?
+    return unless @labels.any?
 
     json_sting = JSON.generate(@labels, { max_nesting: false })
 
@@ -35,10 +35,11 @@ module AppBookLab
   end
 
   def list_labels
+    @labels = load_labels
     if @labels.empty?
       puts 'No labels available.Please create one.'
     else
-      @labels.each_with_index { |label, index| puts "#{index}) Title: #{label.title}, Color: #{label.color}" }
+      @labels.each_with_index { |label, index| puts "#{index + 1}) Title: #{label.title}, Color: #{label.color}" }
     end
   end
 
@@ -57,13 +58,14 @@ module AppBookLab
     cover_state = gets.chomp.downcase
 
     label = create_label
+
     book = Book.new(published_date, publisher, cover_state)
     label.add_item(book)
 
     @books << book
     @labels << label
 
-    puts 'Book Information entered successfully! ✌🏼'
+    puts 'Book and Label Information entered successfully! ✌🏼'
   end
 
   #  Save books
@@ -82,13 +84,13 @@ module AppBookLab
   end
 
   def list_books
+    @books = load_books
     if @books.empty?
       puts 'You need to Add books first !!!'
     else
       @books.each_with_index do |b, i|
-        print "#{i}) Published in #{b['published_date']}, #{b['archived'] ? 'Can be archived' : 'Can NOT be archived'},"
-        puts " Publisher: #{b['publisher']}, #{b['cover_state']}-Cover"
-        puts
+        print "#{i + 1}) Published in #{b.published_date}, #{b.archived ? 'Can be archived' : 'Can NOT be archived'},"
+        puts " Publisher: #{b.publisher}, #{b.cover_state}-Cover"
       end
     end
   end
@@ -102,8 +104,9 @@ class Test
     @labels = load_labels
     create_book
     save_books
+    save_labels
   end
 end
 
 test = Test.new
-test.start
+test.list_labels
