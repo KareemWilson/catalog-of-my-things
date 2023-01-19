@@ -25,7 +25,7 @@
 
 # 📖 Catalog of my things <a name="about-project"></a>
 
->
+> A console app that will help you to keep a record of different types of things you own: books, music albums, movies, and games. The data will be stored in JSON files but you will also prepare a database with tables structure analogical to your program's class structure.
 
 ## 🛠 Built With <a name="built-with"></a>
 
