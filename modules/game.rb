@@ -18,7 +18,7 @@ class Game < Item
       'published_date' => @published_date,
       'multiplayer' => @multiplayer,
       'last_played_at' => @last_played_at,
-      'archived' => @archived,
+      'archived' => @archived
     }.to_json(options)
   end
 end
