@@ -18,7 +18,7 @@ class Item
 
   def add_label(label)
     @label = label
-    label.items << self unless label.items.include?(self)
+    @label.items << self unless @label.items.include?(self)
   end
 
   def add_author(author)
@@ -33,6 +33,6 @@ class Item
   def move_to_archive?
     return unless can_be_archived?
 
-    @archived = can_be_archived?
+    true
   end
 end

@@ -4,11 +4,11 @@ require_relative './open_file'
 require 'json'
 
 module AppBookLab
-  BOOKS_PATH = '../storage_files/books.json'.freeze
-  LABELS_PATH = '../storage_files/labels.json'.freeze
+  BOOKS_PATH = './storage_files/books.json'.freeze
+  LABELS_PATH = './storage_files/labels.json'.freeze
 
-# ................ LABELS OPERATIONS ....................
-  
+  # ................ LABELS OPERATIONS ....................
+
   def create_label
     print 'Enter label title: '
     title = gets.chomp
@@ -24,7 +24,7 @@ module AppBookLab
 
     json_sting = JSON.generate(@labels, { max_nesting: false })
 
-    File.write()
+    File.write(LABELS_PATH, json_sting)
   end
 
   def load_labels
@@ -58,7 +58,7 @@ module AppBookLab
 
     label = create_label
     book = Book.new(published_date, publisher, cover_state)
-    label.add_label(book)
+    label.add_item(book)
 
     @books << book
     @labels << label
@@ -74,8 +74,6 @@ module AppBookLab
     File.write(BOOKS_PATH, json_sting)
   end
 
-  
-  # Read books saved
   def load_books
     data = open_file(BOOKS_PATH)
     return [] unless data.any?
@@ -88,8 +86,8 @@ module AppBookLab
       puts 'You need to Add books first !!!'
     else
       @books.each_with_index do |b, i|
-        print "Book #{i}) Published in #{b['published_date']}, #{b['archived'] ? 'It can be archived' : 'Can NOT be archived'}, "
-        puts "Publisher: #{b['publisher']}, #{b['cover_state']}-Cover"
+        print "#{i}) Published in #{b['published_date']}, #{b['archived'] ? 'Can be archived' : 'Can NOT be archived'},"
+        puts " Publisher: #{b['publisher']}, #{b['cover_state']}-Cover"
         puts
       end
     end
