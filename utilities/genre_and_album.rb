@@ -47,6 +47,7 @@ module GenreAndAlbum
 
     genre = create_genre
     album = MusicAlbum.new(published_date, on_spotify: spotify)
+    album.move_to_archive?
     genre.add_item(album)
 
     @genres.push(genre)

@@ -49,8 +49,10 @@ module GameAndAuthor
     puts 'Enter the last date this Game played at: YY-MM-DD'
     last_played_at = gets.chomp
 
+    puts "Data: #{published_date}, #{multiplayer} ,#{last_played_at}"
     author = create_author
     game = Game.new(published_date, multiplayer, last_played_at)
+    game.move_to_archive?
     author.add_item(game)
 
     @games.push(game)
