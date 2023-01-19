@@ -17,7 +17,7 @@ module GameAndAuthor
   end
 
   def save_authors
-    return unless @authors.empty?
+    return unless @authors.any?
 
     json_sting = JSON.generate(@authors, { max_nesting: false })
     File.write(AUTHORS_FILE_PATH, json_sting)
@@ -31,6 +31,7 @@ module GameAndAuthor
   end
 
   def list_authors
+    @authors = load_authors
     if @authors.empty?
       puts 'No authors available. Please create one.'
     else
@@ -74,11 +75,12 @@ module GameAndAuthor
   end
 
   def list_games
+    @games = load_games
     if @games.empty?
       puts 'No games available, Create a new Game'
     else
       @games.each_with_index do |game, index|
-        puts "Game #{index}) Published date: #{game.publish_date},
+        puts "Game #{index}) Published date: #{game.published_date},
                 multiplayer: #{game.multiplayer},
                 last palyed at: #{game.last_played_at},
                 Author: #{game.author}, "
@@ -95,9 +97,10 @@ class Test
     @authors = load_authors
     create_game
     save_games
+    save_authors
   end
 end
 
 test = Test.new
 
-test.start
+test.list_authors

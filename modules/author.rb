@@ -16,8 +16,8 @@ class Author
 
   def to_json(options = {})
     {
-      'First_name' => @first_name,
-      'Last_name' => @last_name
+      'first_name' => @first_name,
+      'last_name' => @last_name
     }.to_json(options)
   end
 end
