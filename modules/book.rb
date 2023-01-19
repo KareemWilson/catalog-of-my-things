@@ -12,4 +12,13 @@ class Book < Item
   def can_be_archived?
     super or @cover_state == 'bad'
   end
+
+  def to_json(options = {})
+    {
+      'published_date' => @published_date,
+      'archived' => @archived,
+      'publisher' => @publisher,
+      'cover_state' => @cover_state
+    }.to_json(options)
+  end
 end
