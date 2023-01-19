@@ -3,8 +3,8 @@ require_relative '../modules/music_album'
 require_relative '../modules/genre'
 
 module GenreAndAlbum
-  FILE_PATH = '../storage/music_album.json'.freeze
-  FILE_PATH_2 = '../storage_files/genre.json'.freeze
+  FILE_PATH = './storage_files/music_album.json'.freeze
+  FILE_PATH_2 = './storage_files/genre.json'.freeze
 
   # ................ GENRE OPERATIONS ....................
 
@@ -40,17 +40,19 @@ module GenreAndAlbum
 
   def create_album
     puts "Enter the album's publish date: YY/MM/DD"
-    publish_date = gets.chomp
+    published_date = gets.chomp
 
     puts 'Is this album on Spotify? (Y/N)'
-    on_spotify = gets.chomp.upcase == 'Y'
+    spotify = gets.chomp.upcase == 'Y'
 
     genre = create_genre
-    album = MusicAlbum.new(publish_date, on_spotify)
+    album = MusicAlbum.new(published_date, on_spotify: spotify)
     genre.add_item(album)
 
     @genres.push(genre)
     @music_albums.push(album)
+    save_albums
+    save_genres
     puts 'Album created successfully! ✌🏼'
   end
 
@@ -59,8 +61,8 @@ module GenreAndAlbum
       puts 'No music albums available. Please add one.'
     else
       @music_albums.each_with_index do |album, index|
-        puts "#{index}) Publication Date: #{album.publish_date}, Genre: #{album.genre.name},
-        Label: #{album.label.title}, On Spotify: #{album.on_spotify}"
+        puts "#{index}) Publication Date: #{album.published_date}
+        | Archived: #{album.archived} | On Spotify: #{album.on_spotify}"
       end
     end
   end
@@ -69,7 +71,7 @@ module GenreAndAlbum
     data = open_file(FILE_PATH)
     return [] unless data.any?
 
-    data.map { |album| MusicAlbum.new(album['publish_date'], album['archived']) }
+    data.map { |album| MusicAlbum.new(album['publish_date'], on_spotify: album['on_spotify']) }
   end
 
   def save_albums
