@@ -58,6 +58,7 @@ module AppBookLab
     label = create_label
 
     book = Book.new(published_date, publisher, cover_state)
+    book.move_to_archive?
     label.add_item(book)
 
     @books << book
