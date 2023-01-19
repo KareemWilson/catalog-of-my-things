@@ -3,9 +3,9 @@ require 'date'
 class Item
   attr_accessor :published_date, :archived, :label, :author, :genre
 
-  def initialize(published_date, archived)
+  def initialize(published_date, _archived)
     @published_date = published_date
-    @archived = archived
+    @archived = can_be_archived?
     @author = 'Unknown author'
     @id = Random.rand(1..1000)
     @label = 'Unknown label'
@@ -30,11 +30,9 @@ class Item
     Date.parse(@published_date).year < Date.today.year - 10
   end
 
-  private :can_be_archived?
-
   def move_to_archive?
     return unless can_be_archived?
 
-    true
+    @archived = can_be_archived?
   end
 end
