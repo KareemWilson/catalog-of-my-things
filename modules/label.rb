@@ -13,4 +13,13 @@ class Label
     @items << item unless @items.include?(item)
     item.label = self
   end
+
+  # Data Serialization
+  def to_json(options = {})
+    {
+      id: @id,
+      title: @title,
+      color: @color
+    }.to_json(options)
+  end
 end
