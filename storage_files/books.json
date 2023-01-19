@@ -1,1 +1,1 @@
-["#<Book:0x00000176a24103d8>"]
+[{"published_date":"2010-01-01","archived":true,"publisher":"Olivier","cover_state":"good"},{"published_date":"2020-01-01","archived":false,"publisher":"Kango","cover_state":"bad"},{"published_date":"2020-01-01","archived":false,"publisher":"Ishara","cover_state":"good"},{"published_date":"2020-02-01","archived":false,"publisher":"Jesus","cover_state":"good"}]
