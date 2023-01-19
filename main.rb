@@ -53,12 +53,12 @@ class Main
           user_choice(number)
         elsif number.zero?
           terminate = true
-          puts "Thanks for using the app. \nExisting..."
+          puts "Thanks for using the app.🙂 \nExisting..."
         else
           puts 'Unkown input. Try again.'
         end
       else
-        puts 'Use numbers only.'
+        puts 'Use numbers only.🚶🏼‍♂️'
       end
 
 
