@@ -41,3 +41,18 @@ CREATE TABLE genres (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(150)
 );
+
+CREATE TABLE games (
+  published_date DATE,
+  last_played_at DATE,
+  multiplayer BOOLEAN, 
+  genre_id INT REFERENCES genre (id),
+  author_id INT REFERENCES authors (id), 
+  label_id INT REFERENCES label (id),
+)
+
+CREATE TABLE authors (
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+)
