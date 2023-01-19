@@ -35,7 +35,6 @@ module AppBookLab
   end
 
   def list_labels
-    @labels = load_labels
     if @labels.empty?
       puts 'No labels available.Please create one.'
     else
@@ -64,6 +63,8 @@ module AppBookLab
     @books << book
     @labels << label
 
+    save_books
+    save_labels
     puts 'Book and Label Information entered successfully! ✌🏼'
   end
 
@@ -83,7 +84,6 @@ module AppBookLab
   end
 
   def list_books
-    @books = load_books
     if @books.empty?
       puts 'You need to Add books first !!!'
     else
@@ -94,18 +94,3 @@ module AppBookLab
     end
   end
 end
-
-class Test
-  include AppBookLab
-
-  def start
-    @books = load_books
-    @labels = load_labels
-    create_book
-    save_books
-    save_labels
-  end
-end
-
-test = Test.new
-test.list_labels

@@ -31,7 +31,6 @@ module GameAndAuthor
   end
 
   def list_authors
-    @authors = load_authors
     if @authors.empty?
       puts 'No authors available. Please create one.'
     else
@@ -57,6 +56,8 @@ module GameAndAuthor
     @games.push(game)
     @authors.push(author)
 
+    save_games
+    save_authors
     puts 'Game created successfully! ✌🏼'
   end
 
@@ -71,36 +72,19 @@ module GameAndAuthor
     data = open_file(GAMES_FILE_PATH)
     return [] unless data.any?
 
-    data.map { |game| Game.new(game['publish_date'], game['multiplayer'], game['last_played_at']) }
+    puts "REturned data #{data}"
+    data.map { |game| Game.new(game['published_date'], game['multiplayer'], game['last_played_at']) }
   end
 
   def list_games
-    @games = load_games
     if @games.empty?
       puts 'No games available, Create a new Game'
     else
       @games.each_with_index do |game, index|
         puts "Game #{index}) Published date: #{game.published_date},
                 multiplayer: #{game.multiplayer},
-                last palyed at: #{game.last_played_at},
-                Author: #{game.author}, "
+                last palyed at: #{game.last_played_at}"
       end
     end
   end
 end
-
-class Test
-  include GameAndAuthor
-
-  def start
-    @games = load_games
-    @authors = load_authors
-    create_game
-    save_games
-    save_authors
-  end
-end
-
-test = Test.new
-
-test.list_authors
