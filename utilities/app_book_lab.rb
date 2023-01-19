@@ -1,24 +1,52 @@
 require_relative '../modules/book'
 require_relative '../modules/label'
-require_relative '../modules/item'
+require_relative './open_file'
 require 'json'
 
-class AppBookLab
-  def initialize
-    # List of Books
-    @books = []
+module AppBookLab
+  BOOKS_PATH = '../storage_files/books.json'.freeze
+  LABELS_PATH = '../storage_files/labels.json'.freeze
 
-    # List of Labels
-    # @labels = Label.new.items
+# ................ LABELS OPERATIONS ....................
+  
+  def create_label
+    print 'Enter label title: '
+    title = gets.chomp
+
+    print 'Enter label color: '
+    color = gets.chomp
+
+    Label.new(title, color)
   end
 
-  #  Print out all Books
-  def list_all_books
-    read_book_data
+  def save_labels
+    return unless @labels.empty?
+
+    json_sting = JSON.generate(@labels, { max_nesting: false })
+
+    File.write()
   end
 
-  # Add books
-  def add_book
+  def load_labels
+    data = open_file(LABELS_PATH)
+    return [] unless data.any?
+
+    data.map { |label| Label.new(label['title'], label['color']) }
+  end
+
+  def list_labels
+    if @labels.empty?
+      puts 'No labels available.Please create one.'
+    else
+      @labels.each_with_index { |label, index| puts "#{index}) Title: #{label.title}, Color: #{label.color}" }
+    end
+  end
+
+
+  # ................ BOOK OPERATIONS ....................
+
+  # Create book
+  def create_book
     print "What's the Book's published_date? [YY-MM-DD]: "
     published_date = gets.chomp
 
@@ -28,46 +56,56 @@ class AppBookLab
     print 'How is the Cover_state? '
     cover_state = gets.chomp.downcase
 
+    label = create_label
     book = Book.new(published_date, publisher, cover_state)
+    label.add_label(book)
+
     @books << book
+    @labels << label
 
-    save_book_data
-
-    puts 'Book Information entered successfully!!!'
+    puts 'Book Information entered successfully! ✌🏼'
   end
 
   #  Save books
-  def save_book_data
-    data = []
+  def save_books
+    return unless @books.any?
 
-    @books.each do |book|
-      data << { published_date: book.published_date, archived: book.archived, publisher: book.publisher,
-                cover_state: book.cover_state }
-    end
-
-    File.write('./storage_files/books.json', data.to_json)
+    json_sting = JSON.generate(@books, { max_nesting: false })
+    File.write(BOOKS_PATH, json_sting)
   end
 
+  
   # Read books saved
-  def read_book_data
-    if File.exist?('./storage_files/books.json')
-      books = File.read('./storage_files/books.json')
+  def load_books
+    data = open_file(BOOKS_PATH)
+    return [] unless data.any?
 
-      if books == ''
-        puts 'You need to Add books first !!!'
-      else
-        book_data = JSON.parse(books)
+    data.map { |book| Book.new(book['published_date'], book['publisher'], book['cover_state']) }
+  end
 
-        book_data.each do |b|
-          print "Published in #{b['published_date']}, #{b['archived'] ? 'It can be archived' : 'Can NOT be archived'}, "
-          puts "Publisher: #{b['publisher']}, #{b['cover_state']}-Cover"
-          puts
-        end
-      end
+  def list_books
+    if @books.empty?
+      puts 'You need to Add books first !!!'
     else
-      puts 'Books are not available'
+      @books.each_with_index do |b, i|
+        print "Book #{i}) Published in #{b['published_date']}, #{b['archived'] ? 'It can be archived' : 'Can NOT be archived'}, "
+        puts "Publisher: #{b['publisher']}, #{b['cover_state']}-Cover"
+        puts
+      end
     end
   end
 end
 
-AppBookLab.new.list_all_books
+class Test
+  include AppBookLab
+
+  def start
+    @books = load_books
+    @labels = load_labels
+    create_book
+    save_books
+  end
+end
+
+test = Test.new
+test.start
