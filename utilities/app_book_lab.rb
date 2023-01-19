@@ -43,7 +43,6 @@ module AppBookLab
     end
   end
 
-
   # ................ BOOK OPERATIONS ....................
 
   # Create book
