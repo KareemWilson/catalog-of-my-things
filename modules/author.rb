@@ -13,4 +13,11 @@ class Author
     @items << item unless @items.include?(item)
     item.author = self
   end
+
+  def to_json(options = {})
+    {
+      'first_name' => @first_name,
+      'last_name' => @last_name
+    }.to_json(options)
+  end
 end
